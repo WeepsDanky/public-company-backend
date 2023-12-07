@@ -20,8 +20,20 @@ class GroupViewSet(viewsets.ModelViewSet):
     serializer_class = GroupSerializer
 
 class CompanyViewSet(viewsets.ModelViewSet):
-    queryset = Company.objects.all()
+    queryset = Company.objects.all() 
     serializer_class = CompanySerializer
+
+    # can be used to filter the queryset (e.g., /api/companies/?IQ_SECTOR=Financials) 
+    def get_queryset(self):
+        queryset = Company.objects.all() 
+        query_params = self.request.query_params 
+
+        valid_fields = [f.name for f in Company._meta.get_fields()] 
+        for field in valid_fields:
+            if field in query_params:
+                queryset = queryset.filter(**{field: query_params[field]})
+
+        return queryset
 
 class LoginView(APIView):
     def post(self, request):
