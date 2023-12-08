@@ -9,15 +9,18 @@ python manage.py runscript temp -v2
 from api.models import Company
 import pandas as pd
 
-def read_excel_and_output(file_path, num_rows=10):
+def read_excel_and_output(file_path, num_rows=5):
     try:
         # Read the Excel file into a pandas DataFrame
         df = pd.read_excel(file_path, skiprows=1)
+        if df is not None and not df.empty:
+            print(df.head(num_rows))
+            return df
 
-        # Output the first 10 rows
-        #print(df.head(num_rows))
+        else:
+            print("DataFrame is None or empty.")
 
-        return df
+
     except Exception as e:
         print(f"An error occurred: {e}")
 
@@ -46,5 +49,5 @@ def deleteCompany():
 
 def run():
     # deleteCompany()
-    df = read_excel_and_output("scripts\SPGlobal_Export_US+HK_listed.xlsx")
+    df = read_excel_and_output("/var/www/public-company-backend/scripts/data.xlsx")
     addCompany(df)
