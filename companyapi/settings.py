@@ -77,7 +77,7 @@ TEMPLATES = [
     },
 ]
 
-ALLOWED_HOSTS = ['198.44.169.157', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['198.44.169.157', 'localhost', '127.0.0.1 ', 'xieyixuanzuishuai.shop']
 
 WSGI_APPLICATION = "companyapi.wsgi.application"
 
